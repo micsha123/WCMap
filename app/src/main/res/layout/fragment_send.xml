@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical"
+             android:weightSum="100"
+             tools:context="com.ssp.testapp.wcmap.fragment.SendFragment">
+
+    <TextView
+        android:padding="6dp"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:text="@string/enter_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/free"
+            android:id="@+id/radioButton_free"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/paid"
+            android:id="@+id/radioButton_paid"/>
+    </RadioGroup>
+
+    <TextView
+        android:padding="6dp"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:text="@string/enter_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/edit_desc"
+        android:hint="Третье дерево от общежития"
+        android:padding="6dp"
+        android:textAppearance="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+    <com.gc.materialdesign.views.ButtonRectangle
+        android:id="@+id/send_button"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@color/blue"
+        android:text="@string/send"
+        android:layout_gravity="right"/>
+    <com.mapbox.mapboxsdk.views.MapView
+        android:layout_weight="60"
+        android:id="@+id/mapview_send"
+        android:layout_width="fill_parent"
+        mapbox:mapid="@string/mapboxProjectID"
+        mapbox:accessToken="@string/accessToken"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

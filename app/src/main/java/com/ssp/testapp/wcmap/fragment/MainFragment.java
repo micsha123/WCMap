@@ -1,5 +1,6 @@
 package com.ssp.testapp.wcmap.fragment;
 
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,10 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonFloat;
+import com.mapbox.mapboxsdk.api.ILatLng;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.overlay.Icon;
 import com.mapbox.mapboxsdk.overlay.Marker;
 import com.mapbox.mapboxsdk.views.MapView;
+import com.mapbox.mapboxsdk.views.MapViewListener;
 import com.ssp.testapp.wcmap.R;
 import com.ssp.testapp.wcmap.model.MapModel;
 import com.ssp.testapp.wcmap.service.GPSTracker;
@@ -31,12 +34,13 @@ import java.io.IOException;
 public class MainFragment extends Fragment {
 
     private GPSTracker mGps;
-    private double latitude;
-    private double longitude;
+
     private Marker userMarker;
     private MapView mapView;
     private MapModel map;
+    private LatLng customUserMarkerLatLang;
 
+    //secret link oops
     private final String MARKERS_URL = "";
 
     private String json;
@@ -68,16 +72,49 @@ public class MainFragment extends Fragment {
         mapView.setCenter(new LatLng(56.477, 84.954));
         mapView.setZoom(13);
 
-        getLocation();
+        mapView.setMapViewListener(new MapViewListener() {
+            @Override
+            public void onShowMarker(MapView mapView, Marker marker) {
+            }
+
+            @Override
+            public void onHideMarker(MapView mapView, Marker marker) {
+            }
+
+            @Override
+            public void onTapMarker(MapView mapView, Marker marker) {
+            }
+
+            @Override
+            public void onLongPressMarker(MapView mapView, Marker marker) {
+            }
+
+            @Override
+            public void onTapMap(MapView mapView, ILatLng iLatLng) {
+            }
+
+            @Override
+            public void onLongPressMap(MapView mapView, ILatLng iLatLng) {
+                customUserMarkerLatLang = (LatLng) iLatLng;
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, SendFragment.newInstance(
+                                customUserMarkerLatLang.getLatitude(),
+                                customUserMarkerLatLang.getLongitude()))
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
 
         ButtonFloat button = (ButtonFloat) rootView.findViewById(R.id.buttonFloat);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userMarker != null){
+                if (userMarker != null) {
                     mapView.removeMarker(userMarker);
                 }
-                userMarker = new Marker(mapView, null, null, new LatLng(latitude, longitude));
+                getLocation();
+                userMarker = new Marker(mapView, null, null, new LatLng(getLocation()));
                 userMarker.setIcon(new Icon(getActivity(), Icon.Size.LARGE, null, "42A5F5"));
                 mapView.addMarker(userMarker);
             }
@@ -86,12 +123,12 @@ public class MainFragment extends Fragment {
         return rootView;
     }
 
-    private void getLocation(){
+    private Location getLocation(){
         if(mGps.canGetLocation()){
-            latitude = mGps.getLatitude();
-            longitude = mGps.getLongitude();
+            return mGps.getLocation();
         }else{
             mGps.showSettingsAlert();
+            return null;
         }
     }
 
