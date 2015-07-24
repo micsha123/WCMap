@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WCMap</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_update">Update</string>
+    <string name="mapboxProjectID">micsha.mif08hhi</string>
+    <string name="accessToken">sk.eyJ1IjoibWljc2hhIiwiYSI6IjhiZGU2YjdlM2MzN2E0OGI4ZjM5NDNhNWMwMGQzYmFmIn0.iVOoUh_Un6d9KXXnfNjpkQ</string>
+</resources>

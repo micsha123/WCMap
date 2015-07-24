@@ -1,0 +1,16 @@
+<resources>
+
+    <style name="WCAppTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="actionBarStyle">@style/WCAppTheme.ActionBar</item>
+    </style>
+
+    <style name="WCAppTheme.ActionBar" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="background">@color/blue</item>
+        <item name="titleTextStyle">@style/WCAppTheme.ActionBar.Text</item>
+    </style>
+
+    <style name="WCAppTheme.ActionBar.Text" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>
