@@ -29,9 +29,6 @@ public class SendFragment extends Fragment {
     private double latitude;
     private double longitude;
 
-    private String type;
-    private String description;
-
     public static SendFragment newInstance(Double latitude, Double longitude) {
         SendFragment fragment = new SendFragment();
         Bundle args = new Bundle();
